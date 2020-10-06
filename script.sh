@@ -24,17 +24,48 @@ one(){
  
 # do something in two()
 two(){
-	echo "two() called"
-        pause
+echo "enter filename: "
+
+ local fname
+read -p "enter file name" fname
+echo " filnem is "
+if [ ! -f $fname ]; then
+    echo "No such file!" >&2
+    exit 1
+fi
+
+
+lines=$( wc -l <"$fname" )
+words=$( wc -w <"$fname" )
+chars=$( wc -c <"$fname" )
+
+printf 'The file "%s" has %d lines, %d words and %d characters\n' \ "$fname" "$lines" "$words" "$chars"        
+pause
 }
 three(){
-	echo "three() called"
+	local filename
+	read -p "Enter filename :" filename
+        read -p "more or less :" ml
+    if [ $ml == 'm' ]; then
+        more $filename
+else 
+      less $filename
+fi
         pause
 }
 
 four(){
-	echo "four() called"
-        pause
+	local filename
+	read -p "Enter filename to sort :" filename
+sort $filename >> sorted.txt
+read -p "select cat or more to display data :" cm
+ if [ $cm == 'c' ]; then
+        cat sorted.txt
+else 
+      more sorted.txt
+fi
+
+pause
 }
 
  
